@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sipur — Master Hebrew Through Authentic Narratives</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --brand:        #5B6AF0;
+      --brand-light:  #EEF0FE;
+      --brand-dark:   #3D4DD6;
+      --accent:       #F0A05B;
+      --green:        #4ECFA0;
+      --text:         #1A1D2E;
+      --muted:        #6B7280;
+      --subtle:       #9CA3AF;
+      --surface:      #F8F9FF;
+      --white:        #FFFFFF;
+      --border:       #E5E7F0;
+      --radius-sm:    10px;
+      --radius-md:    18px;
+      --radius-lg:    28px;
+      --radius-xl:    40px;
+      --shadow-sm:    0 2px 8px rgba(91,106,240,.08);
+      --shadow-md:    0 8px 32px rgba(91,106,240,.12);
+      --shadow-lg:    0 20px 60px rgba(91,106,240,.15);
+      --font:         'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── Utilities ─── */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 100px;
+      font-size: .95rem; font-weight: 600; cursor: pointer;
+      border: none; transition: transform .15s, box-shadow .15s, background .15s;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--brand); color: var(--white);
+      box-shadow: 0 4px 16px rgba(91,106,240,.35);
+    }
+    .btn-primary:hover { background: var(--brand-dark); box-shadow: 0 6px 24px rgba(91,106,240,.45); }
+    .btn-outline {
+      background: transparent; color: var(--brand);
+      border: 2px solid var(--brand);
+    }
+    .btn-outline:hover { background: var(--brand-light); }
+    .btn-ghost {
+      background: transparent; color: var(--muted);
+      padding: 10px 18px; font-weight: 500;
+    }
+    .btn-ghost:hover { color: var(--brand); background: var(--brand-light); }
+    .btn-lg { padding: 16px 32px; font-size: 1.05rem; }
+
+    /* ─── Section spacing ─── */
+    section { padding: 96px 0; }
+    .section-tag {
+      display: inline-block;
+      background: var(--brand-light); color: var(--brand);
+      font-size: .78rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800; line-height: 1.2;
+      letter-spacing: -.02em; margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 520px; line-height: 1.7;
+    }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header .section-subtitle { margin: 0 auto; }
+
+    /* ══════════════════════════════════════
+       SECTION 1 — NAV
+    ══════════════════════════════════════ */
+    #nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .wordmark {
+      font-size: 1.5rem; font-weight: 900;
+      color: var(--brand); letter-spacing: -.04em;
+    }
+    .wordmark span { color: var(--accent); }
+    .nav-links {
+      display: flex; align-items: center; gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .9rem; font-weight: 500; color: var(--muted);
+      padding: 8px 14px; border-radius: 8px;
+      transition: color .15s, background .15s;
+    }
+    .nav-links a:hover { color: var(--brand); background: var(--brand-light); }
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+
+    /* ══════════════════════════════════════
+       SECTION 2 — HERO
+    ══════════════════════════════════════ */
+    #hero {
+      padding: 80px 0 96px;
+      background: linear-gradient(160deg, var(--surface) 0%, #EEF0FE 60%, #F5F0FF 100%);
+      overflow: hidden;
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); border: 1px solid var(--border);
+      padding: 6px 16px; border-radius: 100px;
+      font-size: .82rem; font-weight: 600; color: var(--brand);
+      margin-bottom: 24px; box-shadow: var(--shadow-sm);
+    }
+    .hero-eyebrow-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; } 50% { opacity: .4; }
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -.03em; margin-bottom: 20px;
+    }
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--brand), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--muted);
+      line-height: 1.7; max-width: 460px; margin-bottom: 36px;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .hero-note {
+      font-size: .82rem; color: var(--subtle); display: flex; align-items: center; gap: 6px;
+    }
+    .hero-note svg { flex-shrink: 0; }
+
+    /* Phone mock */
+    .phone-wrap { position: relative; display: flex; justify-content: center; }
+    .phone {
+      width: 260px;
+      background: var(--white);
+      border-radius: 36px;
+      box-shadow: var(--shadow-lg), 0 0 0 8px rgba(255,255,255,.6);
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+      position: relative;
+    }
+    .phone-notch {
+      height: 28px; background: var(--text);
+      display: flex; justify-content: center; align-items: flex-end; padding-bottom: 4px;
+    }
+    .phone-notch-pill {
+      width: 72px; height: 10px;
+      background: #111; border-radius: 100px;
+    }
+    .phone-screen {
+      padding: 20px 16px 24px;
+      min-height: 260px;
+      background: #FDFCFF;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .phone-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;
+    }
+    .phone-level {
+      font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      background: var(--brand-light); color: var(--brand);
+      padding: 4px 10px; border-radius: 100px;
+    }
+    .phone-progress {
+      height: 4px; background: var(--border); border-radius: 2px; flex: 1; margin-left: 12px;
+    }
+    .phone-progress-fill {
+      height: 100%; width: 60%; background: var(--brand); border-radius: 2px;
+    }
+    .phone-story-title {
+      font-size: .85rem; font-weight: 700; color: var(--text); margin-bottom: 10px;
+      direction: rtl; text-align: right;
+    }
+    .phone-hebrew {
+      font-size: 1.05rem; line-height: 2.0;
+      direction: rtl; text-align: right;
+      color: var(--text);
+      font-family: 'David Libre', 'Times New Roman', serif;
+    }
+    .phone-hebrew .tapped {
+      background: linear-gradient(135deg, #EEF0FE, #E0E4FF);
+      color: var(--brand); border-radius: 4px; padding: 0 3px;
+      cursor: pointer; font-weight: 600;
+    }
+    .phone-audio-bar {
+      margin-top: 20px;
+      background: var(--surface); border-radius: 12px;
+      padding: 10px 14px; display: flex; align-items: center; gap: 10px;
+    }
+    .audio-play-btn {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--brand); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .audio-wave {
+      flex: 1; height: 28px; display: flex; align-items: center; gap: 2px;
+    }
+    .audio-bar {
+      width: 3px; border-radius: 2px; background: var(--border);
+    }
+    .audio-bar.active { background: var(--brand); }
+    .audio-time { font-size: .72rem; color: var(--subtle); font-weight: 600; }
+
+    /* ── Mock UI (hero phone) ── */
+    .mock-top { position: relative; min-height: 88px; }
+    .mock-label { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); margin-bottom: 5px; }
+    .mock-sentence, .mock-worddef { position: absolute; top: 0; left: 0; right: 0; }
+    .mock-sentence { animation: mockShowSentence 5s ease-in-out infinite; }
+    .mock-sentence-text { font-size: .78rem; color: var(--muted); line-height: 1.55; }
+    .mock-worddef { opacity: 0; animation: mockShowDef 5s ease-in-out infinite; }
+    .mock-worddef-hebrew { font-size: 1.1rem; font-weight: 800; color: var(--brand); direction: rtl; margin-bottom: 3px; font-family: 'David Libre', serif; }
+    .mock-worddef-english { font-size: .88rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .mock-worddef-meta { font-size: .68rem; color: var(--subtle); font-style: italic; }
+    .mock-sep { height: 1px; background: var(--border); }
+    .mock-heb { font-size: .95rem; line-height: 2.1; direction: rtl; text-align: right; color: var(--text); font-family: 'David Libre', 'Times New Roman', serif; }
+    .mock-hl { position: relative; border-radius: 4px; padding: 0 3px; animation: mockHighlight 5s ease-in-out infinite; }
+    .mock-save-chip { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); background: var(--brand); color: var(--white); font-size: .6rem; font-weight: 700; padding: 3px 8px; border-radius: 100px; white-space: nowrap; letter-spacing: .04em; pointer-events: none; animation: mockSaveChip 5s ease-in-out infinite; }
+    @keyframes mockShowSentence { 0%,35%{opacity:1;} 45%,90%{opacity:0;} 100%{opacity:1;} }
+    @keyframes mockShowDef     { 0%,35%{opacity:0;} 45%,90%{opacity:1;} 100%{opacity:0;} }
+    @keyframes mockHighlight   { 0%,35%{background:transparent;color:inherit;} 45%,90%{background:linear-gradient(135deg,#EEF0FE,#E0E4FF);color:var(--brand);} 100%{background:transparent;color:inherit;} }
+    @keyframes mockSaveChip    { 0%,42%{opacity:0;transform:translateX(-50%) translateY(4px);} 52%,88%{opacity:1;transform:translateX(-50%) translateY(0);} 96%,100%{opacity:0;transform:translateX(-50%) translateY(4px);} }
+
+    /* Dictionary bubble */
+    .dict-bubble {
+      position: absolute;
+      top: 150px; left: -20px;
+      background: var(--white); border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md); border: 1px solid var(--border);
+      padding: 12px 16px; width: 170px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    .dict-word { font-size: .8rem; font-weight: 800; color: var(--text); margin-bottom: 3px; direction: rtl; }
+    .dict-trans { font-size: .78rem; color: var(--brand); font-weight: 600; margin-bottom: 4px; }
+    .dict-pos { font-size: .7rem; color: var(--subtle); font-style: italic; }
+    .dict-arrow {
+      position: absolute; right: 16px; bottom: -8px;
+      width: 16px; height: 16px;
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transform: rotate(45deg);
+    }
+
+    /* Social chip */
+    .social-chip {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 100px; padding: 8px 18px 8px 8px;
+      box-shadow: var(--shadow-sm); margin-top: 28px;
+    }
+    .social-avatars { display: flex; }
+    .social-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid var(--white);
+      margin-left: -8px; font-size: .68rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white);
+    }
+    .social-avatar:first-child { margin-left: 0; }
+    .av1 { background: #F0A05B; }
+    .av2 { background: #5B6AF0; }
+    .av3 { background: #4ECFA0; }
+    .av4 { background: #E86F6F; }
+    .social-text { font-size: .82rem; }
+    .social-text strong { font-weight: 700; color: var(--text); }
+    .social-text span { color: var(--muted); }
+
+    /* ══════════════════════════════════════
+       SECTION 3 — FEATURES
+    ══════════════════════════════════════ */
+    #features { background: var(--white); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 28px 24px;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--brand);
+    }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .fi-blue   { background: var(--brand-light); }
+    .fi-orange { background: #FFF3E8; }
+    .fi-green  { background: #EDFAF4; }
+    .fi-purple { background: #F3EEFF; }
+    .feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p  { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+
+    /* ══════════════════════════════════════
+       SECTION 4 — LIBRARY
+    ══════════════════════════════════════ */
+    #library { background: var(--surface); }
+    .tabs {
+      display: flex; gap: 8px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 40px;
+    }
+    .tab-btn {
+      padding: 8px 20px; border-radius: 100px;
+      font-size: .88rem; font-weight: 600; cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: var(--white); color: var(--muted);
+      transition: all .15s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--brand); color: var(--white); border-color: var(--brand);
+    }
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .story-card {
+      background: var(--white); border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .story-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .story-thumb {
+      height: 160px; position: relative; overflow: hidden;
+    }
+    .story-thumb svg { width: 100%; height: 100%; }
+    .story-level {
+      position: absolute; top: 12px; left: 12px;
+      font-size: .7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 100px; color: var(--white);
+    }
+    .lv-newbie      { background: #4ECFA0; }
+    .lv-elementary  { background: #5B6AF0; }
+    .lv-intermediate{ background: #F0A05B; }
+    .lv-advanced    { background: #E86F6F; }
+    .story-body { padding: 18px 20px 20px; }
+    .story-title { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .story-desc  { font-size: .84rem; color: var(--muted); line-height: 1.55; margin-bottom: 14px; }
+    .story-meta  { display: flex; align-items: center; gap: 14px; font-size: .78rem; color: var(--subtle); }
+    .story-meta span { display: flex; align-items: center; gap: 4px; }
+    .lib-cta { text-align: center; margin-top: 48px; }
+
+    /* ══════════════════════════════════════
+       SECTION 5 — METHODOLOGY
+    ══════════════════════════════════════ */
+    #methodology { background: var(--white); }
+    .method-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .method-phone-wrap { display: flex; justify-content: center; }
+    .method-phone {
+      width: 240px; background: var(--white);
+      border-radius: 36px; box-shadow: var(--shadow-lg);
+      border: 1.5px solid var(--border); overflow: hidden;
+    }
+    .method-phone-screen {
+      background: linear-gradient(160deg, #EEF0FE 0%, #F8F9FF 100%);
+      padding: 24px 18px; min-height: 380px;
+    }
+    .method-label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--brand); background: var(--white); padding: 4px 10px;
+      border-radius: 100px; display: inline-block; margin-bottom: 16px;
+    }
+    .method-lines { display: flex; flex-direction: column; gap: 10px; }
+    .method-line {
+      height: 14px; border-radius: 7px; background: rgba(91,106,240,.15);
+    }
+    .method-line.short { width: 55%; }
+    .method-line.highlight { background: var(--brand); width: 80%; }
+    .method-translate-chip {
+      background: var(--white); border-radius: 10px;
+      box-shadow: var(--shadow-sm); padding: 10px 14px;
+      margin-top: 20px; font-size: .8rem;
+    }
+    .method-translate-chip strong { color: var(--brand); }
+    .method-niqqud {
+      margin-top: 16px;
+      font-size: 1.3rem; direction: rtl; text-align: right;
+      font-family: 'David Libre', serif;
+      color: var(--brand-dark);
+      background: var(--white); padding: 10px 14px; border-radius: 10px;
+    }
+    .callouts { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .callout {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--surface); border-radius: var(--radius-sm);
+      padding: 16px 18px; border: 1px solid var(--border);
+    }
+    .callout-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: var(--brand-light); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .callout h4 { font-size: .9rem; font-weight: 700; margin-bottom: 3px; }
+    .callout p  { font-size: .82rem; color: var(--muted); }
+    .method-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--brand); font-weight: 600; font-size: .9rem;
+      margin-top: 24px; transition: gap .15s;
+    }
+    .method-link:hover { gap: 10px; }
+
+    /* ══════════════════════════════════════
+       SECTION 6 — TESTIMONIALS
+    ══════════════════════════════════════ */
+    #testimonials { background: var(--surface); }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .testi-card {
+      background: var(--white); border-radius: var(--radius-md);
+      border: 1px solid var(--border); padding: 28px 24px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .stars { display: flex; gap: 3px; margin-bottom: 16px; }
+    .star { color: var(--accent); font-size: 1rem; }
+    .testi-quote { font-size: .9rem; color: var(--text); line-height: 1.7; margin-bottom: 20px; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .82rem; font-weight: 800; color: var(--white);
+      flex-shrink: 0;
+    }
+    .testi-name { font-size: .88rem; font-weight: 700; }
+    .testi-source { font-size: .76rem; color: var(--subtle); margin-top: 1px; }
+
+    /* ══════════════════════════════════════
+       SECTION 7 — CTA
+    ══════════════════════════════════════ */
+    #cta {
+      background: linear-gradient(135deg, var(--brand) 0%, #7B5CF0 100%);
+      padding: 96px 0; text-align: center; position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%23ffffff' fill-opacity='.08'/%3E%3C/svg%3E") repeat;
+      pointer-events: none;
+    }
+    #cta .section-title { color: var(--white); margin-bottom: 14px; }
+    #cta .section-subtitle { color: rgba(255,255,255,.75); margin: 0 auto 40px; max-width: 500px; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-white { background: var(--white); color: var(--brand); box-shadow: 0 4px 20px rgba(0,0,0,.15); }
+    .btn-white:hover { background: #f0f0ff; box-shadow: 0 8px 30px rgba(0,0,0,.2); }
+    .btn-white-outline { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,.5); }
+    .btn-white-outline:hover { background: rgba(255,255,255,.1); border-color: var(--white); }
+    .cta-fine { margin-top: 20px; font-size: .82rem; color: rgba(255,255,255,.55); }
+
+    /* ══════════════════════════════════════
+       SECTION 8 — FOOTER
+    ══════════════════════════════════════ */
+    footer {
+      background: var(--text); color: rgba(255,255,255,.75);
+      padding: 64px 0 0;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-brand .wordmark { font-size: 1.3rem; }
+    .footer-brand p {
+      font-size: .85rem; color: rgba(255,255,255,.5);
+      line-height: 1.65; margin-top: 10px; max-width: 220px;
+    }
+    .footer-col h4 {
+      font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      color: rgba(255,255,255,.4); margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a {
+      font-size: .88rem; color: rgba(255,255,255,.65);
+      transition: color .15s;
+    }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 0; font-size: .8rem; color: rgba(255,255,255,.3);
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom a { color: rgba(255,255,255,.5); transition: color .15s; }
+    .footer-bottom a:hover { color: var(--white); }
+    .footer-legal { display: flex; gap: 20px; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 1024px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-inner { grid-template-columns: 1fr 230px; gap: 32px; }
+      .phone-wrap { justify-content: center; }
+      .method-inner { grid-template-columns: 1fr; gap: 48px; }
+  
+    }
+    @media (max-width: 768px) {
+      section { padding: 64px 0; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: block; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .dict-bubble { left: -10px; }
+      .hero-inner { grid-template-columns: 1fr 175px; gap: 20px; }
+  
+    }
+    @media (max-width: 480px) {
+      .footer-top { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.2rem; }
+      .hero-inner { grid-template-columns: 1fr; }
+    
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     SECTION 1 — NAV
+══════════════════════════════════════ -->
+<header id="nav" role="banner">
+  <div class="container">
+    <nav class="nav-inner" aria-label="Main navigation">
+      <a href="#" class="wordmark" aria-label="Sipur home">Si<span>pur</span></a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#library">Library</a></li>
+        <li><a href="#methodology">How it Works</a></li>
+        <li><a href="#features">SRS Review</a></li>
+        <li><a href="#cta">Pricing</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="#" class="btn btn-ghost">Sign In</a>
+        <a href="#" class="btn btn-primary">Get Started</a>
+      </div>
+
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#1A1D2E" stroke-width="2" stroke-linecap="round">
+          <line x1="2" y1="6" x2="20" y2="6"/>
+          <line x1="2" y1="11" x2="20" y2="11"/>
+          <line x1="2" y1="16" x2="20" y2="16"/>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════
+     SECTION 2 — HERO
+══════════════════════════════════════ -->
+<section id="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <div class="hero-inner">
+
+      <!-- Left: copy -->
+      <div>
+        
+        <h1 class="hero-title" id="hero-title">
+          Master Hebrew through<br>
+          <span class="highlight">Authentic Narratives</span>
+        </h1>
+
+        <p class="hero-sub">
+          Level-appropriate stories with full niqqud, native audio, and instant word
+          translation — so you can read real Hebrew from day one.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary btn-lg">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+              <path d="M9 1.5C4.86 1.5 1.5 4.86 1.5 9S4.86 16.5 9 16.5 16.5 13.14 16.5 9 13.14 1.5 9 1.5zm-1 10.44L5.06 9l1.06-1.06 1.88 1.87 4.88-4.88L13.94 6 8 11.94z" fill="white"/>
+            </svg>
+            Try for Free
+          </a>
+          <a href="#methodology" class="btn btn-outline btn-lg">How it Works</a>
+        </div>
+
+        <p class="hero-note" style="margin-top:16px;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <circle cx="7" cy="7" r="6" stroke="#9CA3AF" stroke-width="1.5"/>
+            <path d="M7 4v3.5l2 2" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          No credit card required
+        </p>
+      </div>
+
+      <!-- Right: phone + bubble -->
+      <div>
+        <div class="phone-wrap">
+
+          <div class="phone" aria-label="App preview showing a Hebrew story">
+            <div class="phone-notch" aria-hidden="true"><div class="phone-notch-pill"></div></div>
+            <div class="phone-screen">
+
+              <!-- Top: sentence / word definition (animated) -->
+              <div class="mock-top">
+                <div class="mock-sentence">
+                  <p class="mock-sentence-text">The princess loved to learn stories every single day.</p>
+                </div>
+                <div class="mock-worddef" aria-live="polite">
+                  <div class="mock-worddef-hebrew">לִלְמֹד</div>
+                  <div class="mock-worddef-english">to learn</div>
+                  <div class="mock-worddef-meta">verb · pa'al binyan · root: ל-מ-ד</div>
+                </div>
+              </div>
+
+              <div class="mock-sep" aria-hidden="true"></div>
+
+              <!-- Hebrew text with animated highlighted word -->
+              <p class="mock-heb" lang="he" dir="rtl">
+                הַנָּסִיכָה אָהֲבָה <span class="mock-hl">לִלְמֹד<span class="mock-save-chip">+ Save</span></span> סִפּוּרִים כָּל יוֹם.
+              </p>
+
+              <!-- Audio bar -->
+              <div class="phone-audio-bar" role="region" aria-label="Audio player">
+                <div class="audio-play-btn" aria-label="Play audio">
+                  <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden="true">
+                    <path d="M1 1l10 6-10 6V1z" fill="white"/>
+                  </svg>
+                </div>
+                <div class="audio-wave" aria-hidden="true">
+                  <div class="audio-bar" style="height:8px"></div>
+                  <div class="audio-bar active" style="height:18px"></div>
+                  <div class="audio-bar" style="height:12px"></div>
+                  <div class="audio-bar active" style="height:22px"></div>
+                  <div class="audio-bar" style="height:10px"></div>
+                  <div class="audio-bar active" style="height:16px"></div>
+                  <div class="audio-bar" style="height:6px"></div>
+                  <div class="audio-bar active" style="height:20px"></div>
+                  <div class="audio-bar" style="height:14px"></div>
+                  <div class="audio-bar" style="height:8px"></div>
+                  <div class="audio-bar active" style="height:18px"></div>
+                  <div class="audio-bar" style="height:10px"></div>
+                  <div class="audio-bar" style="height:24px"></div>
+                  <div class="audio-bar active" style="height:16px"></div>
+                  <div class="audio-bar" style="height:10px"></div>
+                </div>
+                <span class="audio-time">1:24</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Social chip -->
+        <div style="display:flex; justify-content:center;">
+          <div class="social-chip">
+            <div class="social-avatars" aria-hidden="true">
+              <div class="social-avatar av1">MR</div>
+              <div class="social-avatar av2">JL</div>
+              <div class="social-avatar av3">SK</div>
+              <div class="social-avatar av4">AN</div>
+            </div>
+            <div class="social-text">
+              <strong>+1k</strong> <span>Join 1,000+ learners</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SECTION 3 — FEATURES
+══════════════════════════════════════ -->
+<section id="features" aria-labelledby="features-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Features</div>
+      <h2 class="section-title" id="features-title">Learning that fits your lifestyle</h2>
+      <p class="section-subtitle">
+        Skip the textbooks. Dive into stories written for your level, supported
+        by tools that make reading effortless.
+      </p>
+    </div>
+
+    <div class="features-grid">
+
+      <!-- Card 1 -->
+      <div class="feature-card">
+        <div class="feature-icon fi-blue">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <rect x="3" y="4" width="20" height="18" rx="3" stroke="#5B6AF0" stroke-width="2"/>
+            <line x1="8" y1="10" x2="18" y2="10" stroke="#5B6AF0" stroke-width="2" stroke-linecap="round"/>
+            <line x1="8" y1="14" x2="15" y2="14" stroke="#5B6AF0" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Read at Any Level</h3>
+        <p>Stories from Newbie to Advanced — each carefully written and graded so you always feel challenged but never lost.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="feature-card">
+        <div class="feature-icon fi-orange">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <circle cx="13" cy="13" r="9" stroke="#F0A05B" stroke-width="2"/>
+            <path d="M13 8v5l3 3" stroke="#F0A05B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Instant Word Lookup</h3>
+        <p>Tap any word for an immediate translation, part of speech, and example — no switching apps, no breaking your flow.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="feature-card">
+        <div class="feature-icon fi-green">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <circle cx="13" cy="13" r="9" stroke="#4ECFA0" stroke-width="2"/>
+            <path d="M10 13l2 2 5-4" stroke="#4ECFA0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Native Audio</h3>
+        <p>Every story comes with professional native speaker audio. Listen while you read to build your ear for natural Hebrew.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="feature-card">
+        <div class="feature-icon fi-purple">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+            <rect x="4" y="6" width="18" height="14" rx="3" stroke="#9B6FF0" stroke-width="2"/>
+            <path d="M9 12h8M9 15h5" stroke="#9B6FF0" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>SRS Flashcards</h3>
+        <p>Words you look up are automatically added to a spaced-repetition deck — so vocabulary you meet in stories actually sticks.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SECTION 4 — LIBRARY
+══════════════════════════════════════ -->
+<section id="library" aria-labelledby="library-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Library</div>
+      <h2 class="section-title" id="library-title">Explore our Library</h2>
+      <p class="section-subtitle">Find the story that matches your curiosity and level.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" role="tablist" aria-label="Filter stories by level">
+      <button class="tab-btn active" role="tab" aria-selected="true"  aria-controls="cards-all"           data-tab="all">All Levels</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="cards-newbie"        data-tab="newbie">Newbie</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="cards-elementary"    data-tab="elementary">Elementary</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="cards-intermediate"  data-tab="intermediate">Intermediate</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" aria-controls="cards-advanced"      data-tab="advanced">Advanced</button>
+    </div>
+
+    <!-- Story cards — each set shares the same grid container, JS shows/hides -->
+    <div class="cards-grid" id="library-cards">
+
+      <!-- All / Newbie -->
+      <article class="story-card" data-level="newbie">
+        <div class="story-thumb" aria-hidden="true">
+          <svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#EDFAF4"/>
+                <stop offset="100%" stop-color="#A7F3D0"/>
+              </linearGradient>
+            </defs>
+            <rect width="360" height="160" fill="url(#g1)"/>
+            <circle cx="290" cy="40" r="50" fill="#4ECFA0" fill-opacity=".25"/>
+            <circle cx="60" cy="120" r="40" fill="#4ECFA0" fill-opacity=".18"/>
+            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="36" fill="#4ECFA0" fill-opacity=".6" font-family="serif">אָ</text>
+          </svg>
+          <span class="story-level lv-newbie">Newbie</span>
+        </div>
+        <div class="story-body">
+          <h3 class="story-title">My First Day</h3>
+          <p class="story-desc">A simple story about a child's first day of school — perfect for absolute beginners getting used to Hebrew script.</p>
+          <div class="story-meta">
+            <span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="5" stroke="#9CA3AF" stroke-width="1.4"/><path d="M6 3v3l2 2" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round"/></svg>
+              4 min
+            </span>
+            <span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6a4 4 0 108 0A4 4 0 002 6z" stroke="#9CA3AF" stroke-width="1.4"/><path d="M5 6l2 1V4" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Audio included
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Elementary -->
+      <article class="story-card" data-level="elementary">
+        <div class="story-thumb" aria-hidden="true">
+          <svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#EEF0FE"/>
+                <stop offset="100%" stop-color="#C7D2FE"/>
+              </linearGradient>
+            </defs>
+            <rect width="360" height="160" fill="url(#g2)"/>
+            <circle cx="300" cy="30" r="60" fill="#5B6AF0" fill-opacity=".2"/>
+            <circle cx="40" cy="130" r="35" fill="#5B6AF0" fill-opacity=".14"/>
+            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="36" fill="#5B6AF0" fill-opacity=".55" font-family="serif">בֵּית</text>
+          </svg>
+          <span class="story-level lv-elementary">Elementary</span>
+        </div>
+        <div class="story-body">
+          <h3 class="story-title">The Princess and the Moon</h3>
+          <p class="story-desc">A gentle folk tale about a young princess who wishes on the moon every night — rich in basic vocabulary and niqqud.</p>
+          <div class="story-meta">
+            <span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="5" stroke="#9CA3AF" stroke-width="1.4"/><path d="M6 3v3l2 2" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round"/></svg>
+              7 min
+            </span>
+            <span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6a4 4 0 108 0A4 4 0 002 6z" stroke="#9CA3AF" stroke-width="1.4"/><path d="M5 6l2 1V4" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Audio included
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Intermediate -->
+      <article class="story-card" data-level="intermediate">
+        <div class="story-thumb" aria-hidden="true">
+          <svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#FFF3E8"/>
+                <stop offset="100%" stop-color="#FDD9B0"/>
+              </linearGradient>
+            </defs>
+            <rect width="360" height="160" fill="url(#g3)"/>
+            <circle cx="280" cy="50" r="55" fill="#F0A05B" fill-opacity=".25"/>
+            <circle cx="50" cy="110" r="38" fill="#F0A05B" fill-opacity=".18"/>
+            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="32" fill="#F0A05B" fill-opacity=".65" font-family="serif">יְרוּשָׁלַיִם</text>
+          </svg>
+          <span class="story-level lv-intermediate">Intermediate</span>
+        </div>
+        <div class="story-body">
+          <h3 class="story-title">A Walk in Jerusalem</h3>
+          <p class="story-desc">Stroll through Jerusalem's Old City with a local guide — vivid descriptions and everyday conversational Hebrew.</p>
+          <div class="story-meta">
+            <span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="5" stroke="#9CA3AF" stroke-width="1.4"/><path d="M6 3v3l2 2" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round"/></svg>
+              12 min
+            </span>
+            <span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6a4 4 0 108 0A4 4 0 002 6z" stroke="#9CA3AF" stroke-width="1.4"/><path d="M5 6l2 1V4" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Audio included
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Advanced card (hidden initially) -->
+      <article class="story-card" data-level="advanced" style="display:none">
+        <div class="story-thumb" aria-hidden="true">
+          <svg viewBox="0 0 360 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#FEECEC"/>
+                <stop offset="100%" stop-color="#FBBEBE"/>
+              </linearGradient>
+            </defs>
+            <rect width="360" height="160" fill="url(#g4)"/>
+            <circle cx="295" cy="35" r="55" fill="#E86F6F" fill-opacity=".22"/>
+            <circle cx="55" cy="125" r="40" fill="#E86F6F" fill-opacity=".16"/>
+            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="28" fill="#E86F6F" fill-opacity=".65" font-family="serif">הַשִּׁיר</text>
+          </svg>
+          <span class="story-level lv-advanced">Advanced</span>
+        </div>
+        <div class="story-body">
+          <h3 class="story-title">The Poet's Last Letter</h3>
+          <p class="story-desc">An epistolary short story drawing on literary Hebrew — complex tenses, idiomatic expressions, and poetic register.</p>
+          <div class="story-meta">
+            <span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="5" stroke="#9CA3AF" stroke-width="1.4"/><path d="M6 3v3l2 2" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round"/></svg>
+              18 min
+            </span>
+            <span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6a4 4 0 108 0A4 4 0 002 6z" stroke="#9CA3AF" stroke-width="1.4"/><path d="M5 6l2 1V4" stroke="#9CA3AF" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Audio included
+            </span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="lib-cta">
+      <a href="#" class="btn btn-outline btn-lg">
+        View All 80+ Stories
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SECTION 5 — METHODOLOGY
+══════════════════════════════════════ -->
+<section id="methodology" aria-labelledby="method-title">
+  <div class="container">
+    <div class="method-inner">
+
+      <!-- Left: phone mock -->
+      <div class="method-phone-wrap">
+        <div class="method-phone" aria-label="App screenshot showing tap-to-translate feature">
+          <div class="phone-notch" aria-hidden="true"><div class="phone-notch-pill"></div></div>
+          <div class="method-phone-screen">
+            <div class="method-label">Reading Mode</div>
+            <div class="method-lines">
+              <div class="method-line" style="width:90%"></div>
+              <div class="method-line highlight"></div>
+              <div class="method-line" style="width:70%"></div>
+              <div class="method-line short"></div>
+              <div class="method-line" style="width:85%"></div>
+              <div class="method-line highlight" style="width:65%"></div>
+            </div>
+            <div class="method-translate-chip">
+              <div style="font-size:.7rem;color:#9CA3AF;margin-bottom:4px;">Tapped word</div>
+              <strong>שִׂמְחָה</strong> — <span style="color:#6B7280;font-size:.82rem;">joy, happiness (noun, f.)</span>
+            </div>
+            <div class="method-niqqud" lang="he" dir="rtl">בְּשִׂמְחָה רַבָּה</div>
+            <div style="margin-top:16px;background:#EDFAF4;border-radius:10px;padding:10px 14px;">
+              <div style="font-size:.7rem;color:#4ECFA0;font-weight:700;margin-bottom:4px;">NIQQUD SUPPORT</div>
+              <div style="font-size:.78rem;color:#374151;">All stories include full vowel markings — perfect for building pronunciation confidence.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: copy -->
+      <div>
+        <div class="section-tag">How it Works</div>
+        <h2 class="section-title" id="method-title">Authentic Immersion,<br>Without the Frustration.</h2>
+        <p class="section-subtitle" style="margin-bottom:0;">
+          Every Sipur story is carefully graded and paired with built-in tools — so you
+          spend your time reading and absorbing, not wrestling with a dictionary.
+        </p>
+
+        <div class="callouts">
+          <div class="callout">
+            <div class="callout-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M10 2C5.58 2 2 5.58 2 10s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm-.5 4h1v5h-1V6zm.5 8a1 1 0 110-2 1 1 0 010 2z" fill="#5B6AF0"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Tap to Translate</h4>
+              <p>Instant definition, root, and example sentence for any word — without leaving the page.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <rect x="3" y="4" width="14" height="12" rx="2.5" stroke="#5B6AF0" stroke-width="1.8"/>
+                <path d="M7 9h6M7 12h4" stroke="#5B6AF0" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Niqqud Support</h4>
+              <p>Full vowel markings on every story so you can read with confidence and build correct pronunciation from the start.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="7" stroke="#5B6AF0" stroke-width="1.8"/>
+                <path d="M8 7.5l5 2.5-5 2.5V7.5z" fill="#5B6AF0"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Audio Control</h4>
+              <p>Adjust playback speed, loop sentences, and follow along with highlighted text synchronized to the native speaker.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="#" class="method-link">
+          Our Methodology
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SECTION 6 — TESTIMONIALS
+══════════════════════════════════════ -->
+<section id="testimonials" aria-labelledby="testi-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Learners</div>
+      <h2 class="section-title" id="testi-title">What Our Learners are Saying</h2>
+      <p class="section-subtitle">Join thousands of students who traded textbooks for narratives.</p>
+    </div>
+
+    <div class="testimonials-grid">
+
+      <div class="testi-card">
+        <div class="stars" aria-label="5 out of 5 stars">
+          <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span>
+        </div>
+        <p class="testi-quote">"After two years of struggling with grammar drills, Sipur finally made Hebrew feel real. I look forward to my reading session every evening — it never feels like studying."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#5B6AF0" aria-label="User initials: MR">MR</div>
+          <div>
+            <div class="testi-name">Maya R.</div>
+            <div class="testi-source">Via App Store · Elementary Level</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="stars" aria-label="5 out of 5 stars">
+          <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span>
+        </div>
+        <p class="testi-quote">"The tap-to-translate is a game changer. I read a full intermediate story on my commute and didn't have to stop once. My vocabulary has exploded in the past month."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#F0A05B" aria-label="User initials: JL">JL</div>
+          <div>
+            <div class="testi-name">James L.</div>
+            <div class="testi-source">Via Google Play · Intermediate Level</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="stars" aria-label="5 out of 5 stars">
+          <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+          <span class="star" aria-hidden="true">★</span>
+        </div>
+        <p class="testi-quote">"I'm preparing for my Bat Mitzvah and Sipur has been incredible for building my confidence with niqqud. The native audio helps so much with my pronunciation too."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#4ECFA0" aria-label="User initials: SK">SK</div>
+          <div>
+            <div class="testi-name">Sophie K.</div>
+            <div class="testi-source">Via Web · Newbie Level</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SECTION 7 — FINAL CTA
+══════════════════════════════════════ -->
+<section id="cta" aria-labelledby="cta-title">
+  <div class="container" style="position:relative;z-index:1;">
+    <h2 class="section-title" id="cta-title">Ready to start your Hebrew<br>immersion journey?</h2>
+    <p class="section-subtitle">Join 1,000+ students and get unlimited access to our entire library of graded stories.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn btn-white btn-lg">Sign Up Free</a>
+      <a href="#library" class="btn btn-white-outline btn-lg">Explore Library</a>
+    </div>
+    <p class="cta-fine">No credit card required to start reading.</p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     SECTION 8 — FOOTER
+══════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-top">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="#" class="wordmark" aria-label="Sipur home">Si<span>pur</span></a>
+        <p>Graded Hebrew stories for every learner — from your first aleph to reading literature.</p>
+      </div>
+
+      <!-- Resources -->
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Story Library</a></li>
+          <li><a href="#">SRS Flashcards</a></li>
+          <li><a href="#">Hebrew Grammar Guide</a></li>
+        </ul>
+      </div>
+
+      <!-- Company -->
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Sipur</a></li>
+          <li><a href="#">Our Methodology</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Social -->
+      <div class="footer-col">
+        <h4>Social</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">X / Twitter</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 Sipur. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════
+     JS — Tab switching + tiny interactions
+══════════════════════════════════════ -->
+<script>
+  (function () {
+    // ── Library tabs ──
+    const tabs  = document.querySelectorAll('.tab-btn');
+    const cards = document.querySelectorAll('#library-cards .story-card');
+
+    function filterCards(level) {
+      cards.forEach(card => {
+        const show = level === 'all' || card.dataset.level === level;
+        card.style.display = show ? '' : 'none';
+      });
+    }
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        filterCards(btn.dataset.tab);
+      });
+    });
+
+    // ── Hamburger (mobile nav) ──
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks  = document.querySelector('.nav-links');
+    let   open      = false;
+
+    hamburger.addEventListener('click', () => {
+      open = !open;
+      hamburger.setAttribute('aria-expanded', open);
+      if (open) {
+        navLinks.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(16px);padding:16px 24px;gap:4px;border-bottom:1px solid #E5E7F0;z-index:99;';
+      } else {
+        navLinks.style.cssText = '';
+        if (window.innerWidth <= 768) navLinks.style.display = 'none';
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        navLinks.style.cssText = '';
+        open = false;
+        hamburger.setAttribute('aria-expanded', false);
+      } else if (!open) {
+        navLinks.style.display = 'none';
+      }
+    });
+
+    // trigger initial state
+    if (window.innerWidth <= 768) navLinks.style.display = 'none';
+
+    // ── Scroll-in fade for section cards (IntersectionObserver) ──
+    const observerStyle = document.createElement('style');
+    observerStyle.textContent = '.fade-up{opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease;}.fade-up.visible{opacity:1;transform:none;}';
+    document.head.appendChild(observerStyle);
+
+    const targets = document.querySelectorAll('.feature-card, .story-card, .testi-card, .callout');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+
+    targets.forEach((el, i) => {
+      el.classList.add('fade-up');
+      el.style.transitionDelay = (i % 4) * 80 + 'ms';
+      io.observe(el);
+    });
+  })();
+</script>
+
+</body>
+</html>
